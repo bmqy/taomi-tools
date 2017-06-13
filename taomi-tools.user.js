@@ -1,6 +1,6 @@
 ﻿// ==UserScript==
 // @name         淘米辅助工具
-// @namespace    http://tampermonkey.net/
+// @namespace    http://bmqy.net/
 // @version      0.1
 // @description  为方便域名爱好者打造的辅助型工具。支持聚名网、易名中国、爱名网（可能会不定期更新）。
 // @author       bmqy
