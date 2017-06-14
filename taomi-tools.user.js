@@ -1,12 +1,12 @@
 ﻿// ==UserScript==
 // @name         淘米辅助工具
 // @namespace    http://bmqy.net/
-// @version      0.1
-// @description  为方便域名爱好者打造的辅助型工具。支持聚名网、易名中国、爱名网（可能会不定期更新）。
+// @version      0.2
+// @description  为方便域名爱好者打造的辅助型工具。支持万网、聚名网、易名中国、爱名网（可能会不定期更新）。
 // @author       bmqy
+// @match        *://*.aliyun.com/*
 // @match        *://*.juming.com/*
 // @match        *://*.ename.com/*
-// @match        *://*.yijie.com/*
 // @match        *://*.22.cn/*
 // @require      https://code.jquery.com/jquery-latest.js
 // @run-at       document-end
@@ -17,8 +17,8 @@
     'use strict';
     GM_addStyle(
         '.taomiTools-a{font-family:Microsoft YaHei;font-size:12px;color:blue;font-weight:normal;}'+
-        '.taomiTools-a.tianyancha{color:#009bae;}'+
-        '.taomiTools-a.gujia{color:#ff5c03;}'+
+        '.taomiTools-a.tianyancha{color:#009bae !important;}'+
+        '.taomiTools-a.gujia{color:#ff5c03 !important;}'+
         '#domainSearchBtns{color:#666;}'
     );
 
@@ -26,6 +26,10 @@
         // 识别当前网站
         var sWindowUrl = location.host;
 
+        // 兼容万网
+        if( sWindowUrl.indexOf('aliyun.com') !=-1){
+            wanwang.addDomainSearchInfo();
+        }
         // 兼容聚名网
         if( sWindowUrl.indexOf('juming.com') !=-1){
             juming.addSearchSuffix();
@@ -43,6 +47,37 @@
     };
 
     var $ = $ || window.$;
+
+    /*
+    “万网”辅助
+    */
+    var wanwang = new WanWang();
+    function WanWang(){
+        // 域名列表增加“域名辅助信息查询”按钮，可一键查询该域名企业信息、估价信息
+        this.addDomainSearchInfo = function (){
+            changeShuchuHtml();
+            $(document).on('DOMNodeInserted', '.J_result_data', function(){
+                if($('#domainSearchBtns').size()===0){
+                    changeShuchuHtml();
+                }
+            });
+            function changeShuchuHtml(){
+                var DoMainList = $('.J_result_data');
+                DoMainList.find('tr').each(function(i,e){
+                    var AtotalCount = DoMainList.find('tr').size();
+                    if(i>0 && i<AtotalCount){
+                        var DoMainAObj = $(e).find('.first');
+                        var DoMain = DoMainAObj.text();
+                        var DoMainName = DoMain.split('.');
+                        var AddDomainSearchBtnsWrap = $('<span id="domainSearchBtns"></span');
+                        var AddDomainSearchBtnsHtml = '【<a class="taomiTools-a tianyancha" target="_blank" title="来！天眼查一下" href="http://www.tianyancha.com/search?key='+ DoMainName[0] +'">天眼查</a>|<a class="taomiTools-a gujia" target="_blank" title="来！估个价" href="http://www.cxz.com/s.php?site='+ DoMain +'">估价</a>】';
+                        AddDomainSearchBtnsWrap.html(AddDomainSearchBtnsHtml);
+                        DoMainAObj.append(AddDomainSearchBtnsWrap);
+                    }
+                });
+            }
+        };
+    }
 
     /*
     “聚名网”辅助
