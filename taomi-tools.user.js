@@ -1,7 +1,7 @@
-﻿// ==UserScript==
+// ==UserScript==
 // @name         淘米辅助工具
 // @namespace    http://bmqy.net/
-// @version      0.2
+// @version      0.3
 // @description  为方便域名爱好者打造的辅助型工具。支持万网、聚名网、易名中国、爱名网（可能会不定期更新）。
 // @author       bmqy
 // @match        *://*.aliyun.com/*
@@ -16,6 +16,7 @@
 (function() {
     'use strict';
     GM_addStyle(
+        '#domainSearchBtns{font-size:12px;}'+
         '.taomiTools-a{font-family:Microsoft YaHei;font-size:12px;color:blue;font-weight:normal;}'+
         '.taomiTools-a.tianyancha{color:#009bae !important;}'+
         '.taomiTools-a.gujia{color:#ff5c03 !important;}'+
@@ -29,24 +30,36 @@
         // 兼容万网
         if( sWindowUrl.indexOf('aliyun.com') !=-1){
             wanwang.addDomainSearchInfo();
+            wanwang.addDomainSearchInfoForDetail();
         }
         // 兼容聚名网
         if( sWindowUrl.indexOf('juming.com') !=-1){
             juming.addSearchSuffix();
             juming.openChazczt();
             juming.addDomainSearchInfo();
+            juming.addDomainSearchInfoForDetail();
         }
         // 兼容易名中国
         if( sWindowUrl.indexOf('ename.com') !=-1){
             ename.addDomainSearchInfo();
+            ename.addDomainSearchInfoForDetail();
         }
         // 兼容爱名网
         if( sWindowUrl.indexOf('22.cn') !=-1){
             aiming.addDomainSearchInfo();
+            aiming.addDomainSearchInfoForDetail();
         }
     };
 
     var $ = $ || window.$;
+
+    // 获取“域名辅助信息查询”按钮
+    function getDomainSearchInfoBtns(domain, domainName){
+        var AddDomainSearchBtnsWrap = $('<span id="domainSearchBtns"></span');
+        var AddDomainSearchBtnsHtml = '【<a class="taomiTools-a tianyancha" target="_blank" title="来！天眼查一下" href="http://www.tianyancha.com/search?key='+ domainName +'">天眼查</a>|<a class="taomiTools-a gujia" target="_blank" title="来！估个价" href="http://www.cxz.com/s.php?site='+ domain +'">估价</a>】';
+        AddDomainSearchBtnsWrap.html(AddDomainSearchBtnsHtml);
+        return AddDomainSearchBtnsWrap;
+    }
 
     /*
     “万网”辅助
@@ -69,13 +82,17 @@
                         var DoMainAObj = $(e).find('.first');
                         var DoMain = DoMainAObj.text();
                         var DoMainName = DoMain.split('.');
-                        var AddDomainSearchBtnsWrap = $('<span id="domainSearchBtns"></span');
-                        var AddDomainSearchBtnsHtml = '【<a class="taomiTools-a tianyancha" target="_blank" title="来！天眼查一下" href="http://www.tianyancha.com/search?key='+ DoMainName[0] +'">天眼查</a>|<a class="taomiTools-a gujia" target="_blank" title="来！估个价" href="http://www.cxz.com/s.php?site='+ DoMain +'">估价</a>】';
-                        AddDomainSearchBtnsWrap.html(AddDomainSearchBtnsHtml);
-                        DoMainAObj.append(AddDomainSearchBtnsWrap);
+                        DoMainAObj.append(getDomainSearchInfoBtns(DoMain, DoMainName[0]));
                     }
                 });
             }
+        };
+        // 域名出售详情页增加“天眼查”和“估价”按钮
+        this.addDomainSearchInfoForDetail = function (){
+            var PageTitle = $('.tao-title .tdo-name');
+            var DoMain = PageTitle.text();
+            var DoMainName = DoMain.split('.');
+            PageTitle.append(getDomainSearchInfoBtns(DoMain, DoMainName[0]));
         };
     }
 
@@ -108,7 +125,6 @@
                 BtnChazczt.setAttribute('onclick','return pl_chazczt2();');
             });
         };
-
         // 域名列表增加“域名辅助信息查询”按钮，可一键查询该域名企业信息、估价信息
         this.addDomainSearchInfo = function (){
             changeShuchuHtml();
@@ -125,13 +141,17 @@
                         var DoMainAObj = $(e).find('td:first-child a');
                         var DoMain = DoMainAObj.text();
                         var DoMainName = DoMain.split('.');
-                        var AddDomainSearchBtnsWrap = $('<span id="domainSearchBtns"></span');
-                        var AddDomainSearchBtnsHtml = '【<a class="taomiTools-a tianyancha" target="_blank" title="来！天眼查一下" href="http://www.tianyancha.com/search?key='+ DoMainName[0] +'">天眼查</a>|<a class="taomiTools-a gujia" target="_blank" title="来！估个价" href="http://www.cxz.com/s.php?site='+ DoMain +'">估价</a>】';
-                        AddDomainSearchBtnsWrap.html(AddDomainSearchBtnsHtml);
-                        DoMainAObj.after(AddDomainSearchBtnsWrap);
+                        DoMainAObj.after(getDomainSearchInfoBtns(DoMain, DoMainName[0]));
                     }
                 });
             }
+        };
+        // 域名出售详情页增加“天眼查”和“估价”按钮
+        this.addDomainSearchInfoForDetail = function (){
+            var PageTitle = $('.pjtitle');
+            var DoMain = PageTitle.text();
+            var DoMainName = DoMain.split('.');
+            PageTitle.after(getDomainSearchInfoBtns(DoMain, DoMainName[0]));
         };
     }
 
@@ -156,13 +176,17 @@
                         var DoMainAObj = $(e).find('.domain a');
                         var DoMain = DoMainAObj.text();
                         var DoMainName = DoMain.split('.');
-                        var AddDomainSearchBtnsWrap = $('<span id="domainSearchBtns"></span');
-                        var AddDomainSearchBtnsHtml = '【<a class="taomiTools-a tianyancha" target="_blank" title="来！天眼查一下" href="http://www.tianyancha.com/search?key='+ DoMainName[0] +'">天眼查</a>|<a class="taomiTools-a gujia" target="_blank" title="来！估个价" href="http://www.cxz.com/s.php?site='+ DoMain +'">估价</a>】';
-                        AddDomainSearchBtnsWrap.html(AddDomainSearchBtnsHtml);
-                        DoMainAObj.after(AddDomainSearchBtnsWrap);
+                        DoMainAObj.after(getDomainSearchInfoBtns(DoMain, DoMainName[0]));
                     }
                 });
             }
+        };
+        // 域名出售详情页增加“天眼查”和“估价”按钮
+        this.addDomainSearchInfoForDetail = function (){
+            var PageTitle = $('.domain_head .title');
+            var DoMain = PageTitle.text();
+            var DoMainName = DoMain.split('.');
+            PageTitle.append(getDomainSearchInfoBtns(DoMain, DoMainName[0]));
         };
     }
 
@@ -187,13 +211,17 @@
                         var DoMainAObj = $(e).find('a.hui6-hover');
                         var DoMain = DoMainAObj.text();
                         var DoMainName = DoMain.split('.');
-                        var AddDomainSearchBtnsWrap = $('<span id="domainSearchBtns"></span');
-                        var AddDomainSearchBtnsHtml = '【<a class="taomiTools-a tianyancha" target="_blank" title="来！天眼查一下" href="http://www.tianyancha.com/search?key='+ DoMainName[0] +'">天眼查</a>|<a class="taomiTools-a gujia" target="_blank" title="来！估个价" href="http://www.cxz.com/s.php?site='+ DoMain +'">估价</a>】';
-                        AddDomainSearchBtnsWrap.html(AddDomainSearchBtnsHtml);
-                        DoMainAObj.after(AddDomainSearchBtnsWrap);
+                        DoMainAObj.after(getDomainSearchInfoBtns(DoMain, DoMainName[0]));
                     }
                 });
             }
+        };
+        // 域名出售详情页增加“天眼查”和“估价”按钮
+        this.addDomainSearchInfoForDetail = function (){
+            var PageTitle = $('.detail-tit .dt-yuming');
+            var DoMain = PageTitle.text();
+            var DoMainName = DoMain.split('.');
+            PageTitle.append(getDomainSearchInfoBtns(DoMain, DoMainName[0]));
         };
     }
 })();
