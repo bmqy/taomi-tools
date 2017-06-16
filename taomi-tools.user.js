@@ -1,14 +1,14 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name         淘米辅助工具
 // @namespace    http://bmqy.net/
-// @version      0.3
+// @version      0.3.1
 // @description  为方便域名爱好者打造的辅助型工具。支持万网、聚名网、易名中国、爱名网（可能会不定期更新）。
 // @author       bmqy
 // @match        *://*.aliyun.com/*
 // @match        *://*.juming.com/*
 // @match        *://*.ename.com/*
 // @match        *://*.22.cn/*
-// @require      https://code.jquery.com/jquery-latest.js
+// @require      http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js
 // @run-at       document-end
 // @grant        GM_addStyle
 // ==/UserScript==
@@ -16,11 +16,10 @@
 (function() {
     'use strict';
     GM_addStyle(
-        '#domainSearchBtns{font-size:12px;}'+
         '.taomiTools-a{font-family:Microsoft YaHei;font-size:12px;color:blue;font-weight:normal;}'+
         '.taomiTools-a.tianyancha{color:#009bae !important;}'+
         '.taomiTools-a.gujia{color:#ff5c03 !important;}'+
-        '#domainSearchBtns{color:#666;}'
+        '#domainSearchBtns{font-size:12px;color:#666;}'
     );
 
     window.onload = function(){
