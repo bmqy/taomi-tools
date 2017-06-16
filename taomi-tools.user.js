@@ -8,7 +8,7 @@
 // @match        *://*.juming.com/*
 // @match        *://*.ename.com/*
 // @match        *://*.22.cn/*
-// @require      http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js
+// @require      https://cdn.bootcss.com/jquery/2.2.1/jquery.js
 // @run-at       document-end
 // @grant        GM_addStyle
 // ==/UserScript==
