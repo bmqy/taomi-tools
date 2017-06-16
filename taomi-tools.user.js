@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         淘米辅助工具
 // @namespace    http://bmqy.net/
-// @version      0.3.2
+// @version      0.3.3
 // @description  为方便域名爱好者打造的辅助型工具。支持万网、聚名网、易名中国、爱名网（可能会不定期更新）。
 // @author       bmqy
 // @match        *://*.aliyun.com/*
@@ -145,13 +145,19 @@
                 });
             }
         };
-        // 域名出售详、竞价情页增加“天眼查”和“估价”按钮
+        // 域名出售详情页增加“天眼查”和“估价”按钮
         this.addDomainSearchInfoForDetail = function (){
-            var PageTitle = $('.pjtitle') || $('.orderinfo h1');
-            var PageJingJiaTools = $('#app_zhcxsc');
+            var PageTitle = $('.pjtitle');
             var DoMain = PageTitle.text();
             var DoMainName = DoMain.split('.');
             PageTitle.after(getDomainSearchInfoBtns(DoMain, DoMainName[0]));
+        };
+        // 域名竞价情页增加“天眼查”和“估价”按钮
+        this.addDomainSearchInfoForDetail = function (){
+            var PageTitle = $('.orderinfo h1');
+            var PageJingJiaTools = $('#app_zhcxsc');
+            var DoMain = PageTitle.attr('title');
+            var DoMainName = DoMain.split('.');
             PageJingJiaTools.prepend(getDomainSearchInfoBtns(DoMain, DoMainName[0]));
         };
     }
