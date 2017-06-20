@@ -37,7 +37,8 @@
             juming.addSearchSuffix();
             juming.openChazczt();
             juming.addDomainSearchInfo();
-            juming.addDomainSearchInfoForDetail();
+            juming.addDomainSearchInfoForSaleDetail();
+            juming.addDomainSearchInfoForJingjiaDetail();
         }
         // 兼容易名中国
         if( sWindowUrl.indexOf('ename.com') !=-1){
@@ -147,14 +148,14 @@
             }
         };
         // 域名出售详情页增加“天眼查”和“估价”按钮
-        this.addDomainSearchInfoForDetail = function (){
+        this.addDomainSearchInfoForSaleDetail = function (){
             var PageTitle = $('.pjtitle');
             var DoMain = PageTitle.text();
             var DoMainName = DoMain.split('.');
             PageTitle.after(getDomainSearchInfoBtns(DoMain, DoMainName[0]));
         };
         // 域名竞价情页增加“天眼查”和“估价”按钮
-        this.addDomainSearchInfoForDetail = function (){
+        this.addDomainSearchInfoForJingjiaDetail = function (){
             var PageTitle = $('.orderinfo h1');
             var PageJingJiaTools = $('#app_zhcxsc');
             var DoMain = PageTitle.attr('title');
