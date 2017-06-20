@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         淘米辅助工具
 // @namespace    http://bmqy.net/
-// @version      0.3.3
+// @version      0.3.4
 // @description  为方便域名爱好者打造的辅助型工具。支持万网、聚名网、易名中国、爱名网（可能会不定期更新）。
 // @author       bmqy
 // @match        *://*.aliyun.com/*
@@ -19,6 +19,7 @@
         '.taomiTools-a{font-family:Microsoft YaHei;font-size:12px;color:blue;font-weight:normal;}'+
         '.taomiTools-a.tianyancha{color:#009bae !important;}'+
         '.taomiTools-a.gujia{color:#ff5c03 !important;}'+
+        '.taomiTools-a.wanwang{color:#1dbbd8 !important;}'+
         '#domainSearchBtns{font-size:12px;color:#666;}'
     );
 
@@ -55,7 +56,7 @@
     // 获取“域名辅助信息查询”按钮
     function getDomainSearchInfoBtns(domain, domainName){
         var AddDomainSearchBtnsWrap = $('<span id="domainSearchBtns"></span');
-        var AddDomainSearchBtnsHtml = '【<a class="taomiTools-a tianyancha" target="_blank" title="来！天眼查一下" href="http://www.tianyancha.com/search?key='+ domainName +'">天眼查</a>|<a class="taomiTools-a gujia" target="_blank" title="来！估个价" href="http://www.cxz.com/s.php?site='+ domain +'">估价</a>】';
+        var AddDomainSearchBtnsHtml = '【<a class="taomiTools-a tianyancha" target="_blank" title="来！天眼查一下" href="http://www.tianyancha.com/search?key='+ domainName +'">眼</a>|<a class="taomiTools-a gujia" target="_blank" title="来！估个价" href="http://www.cxz.com/s.php?site='+ domain +'">估</a>|<a class="taomiTools-a wanwang" target="_blank" title="查，已注册后缀域名" href="https://wanwang.aliyun.com/domain/searchresult/?keyword='+ domainName +'&suffix=.com">注</a>】';
         AddDomainSearchBtnsWrap.html(AddDomainSearchBtnsHtml);
         return AddDomainSearchBtnsWrap;
     }
