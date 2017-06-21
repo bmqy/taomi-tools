@@ -8,4 +8,4 @@
 4、可以使用“一键检测注册状态”按钮（仅支持聚名网）；  
 
 如果您觉得我这个插件有帮助到您，请微信扫一扫，赞赏我一下  
-![微信扫一扫，赞赏我一下](https://github.com/bmqy/taomi-tools/blob/master/images/weixinpay.png)
+![微信扫一扫，赞赏我一下](https://raw.githubusercontent.com/bmqy/taomi-tools/master/images/weixinpay.png)
