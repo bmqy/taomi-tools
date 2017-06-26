@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         淘米辅助工具
 // @namespace    http://bmqy.net/
-// @version      0.3.4
+// @version      0.3.5
 // @description  为方便域名爱好者打造的辅助型工具。支持万网、聚名网、易名中国、爱名网（可能会不定期更新）。
 // @author       bmqy
 // @match        *://*.aliyun.com/*
@@ -55,9 +55,11 @@
     var $ = $ || window.$;
 
     // 获取“域名辅助信息查询”按钮
-    function getDomainSearchInfoBtns(domain, domainName){
+    function getDomainSearchInfoBtns(domain){
+        var _sDomain = domain.trim();
+        var _sDomainName = _sDomain.split(',')[0]
         var AddDomainSearchBtnsWrap = $('<span id="domainSearchBtns"></span');
-        var AddDomainSearchBtnsHtml = '【<a class="taomiTools-a tianyancha" target="_blank" title="来！天眼查一下" href="http://www.tianyancha.com/search?key='+ domainName +'">眼</a>|<a class="taomiTools-a gujia" target="_blank" title="来！估个价" href="http://www.cxz.com/s.php?site='+ domain +'">估</a>|<a class="taomiTools-a wanwang" target="_blank" title="查，已注册后缀域名" href="https://wanwang.aliyun.com/domain/searchresult/?keyword='+ domainName +'&suffix=.com">注</a>】';
+        var AddDomainSearchBtnsHtml = '【<a class="taomiTools-a tianyancha" target="_blank" title="来！天眼查一下" href="http://www.tianyancha.com/search?key='+ _sDomainName +'">眼</a>|<a class="taomiTools-a gujia" target="_blank" title="来！估个价" href="http://www.cxz.com/s.php?site='+ _sDomain +'">估</a>|<a class="taomiTools-a wanwang" target="_blank" title="查，已注册后缀域名" href="https://wanwang.aliyun.com/domain/searchresult/?keyword='+ _sDomainName +'&suffix=.com">注</a>】';
         AddDomainSearchBtnsWrap.html(AddDomainSearchBtnsHtml);
         return AddDomainSearchBtnsWrap;
     }
@@ -76,24 +78,22 @@
                 }
             });
             function changeShuchuHtml(){
-                var DoMainList = $('.J_result_data');
-                DoMainList.find('tr').each(function(i,e){
-                    var AtotalCount = DoMainList.find('tr').size();
+                var asDoMainList = $('.J_result_data');
+                asDoMainList.find('tr').each(function(i,e){
+                    var AtotalCount = asDoMainList.find('tr').size();
                     if(i>0 && i<AtotalCount){
-                        var DoMainAObj = $(e).find('.first');
-                        var DoMain = DoMainAObj.text();
-                        var DoMainName = DoMain.split('.');
-                        DoMainAObj.append(getDomainSearchInfoBtns(DoMain, DoMainName[0]));
+                        var osDoMainA = $(e).find('.first');
+                        var sDoMain = osDoMainA.text();
+                        osDoMainA.append(getDomainSearchInfoBtns(sDoMain));
                     }
                 });
             }
         };
         // 域名出售详情页增加“天眼查”和“估价”按钮
         this.addDomainSearchInfoForDetail = function (){
-            var PageTitle = $('.tao-title .tdo-name');
-            var DoMain = PageTitle.text();
-            var DoMainName = DoMain.split('.');
-            PageTitle.append(getDomainSearchInfoBtns(DoMain, DoMainName[0]));
+            var oPageTitle = $('.tao-title .tdo-name');
+            var sDoMain = oPageTitle.text();
+            oPageTitle.append(getDomainSearchInfoBtns(sDoMain));
         };
     }
 
@@ -104,17 +104,17 @@
     function JuMing(){
         // 为搜索框自动补全".com"后缀
         this.addSearchSuffix = function (){
-            var SearchInput = document.querySelector('#taodm');
-            var Reg = /(.com|.net|.cn|.com.cn)$/;
-            SearchInput.addEventListener('blur', function(){
-                if(SearchInput.value !== '域名信息综合查询' && !SearchInput.value.match(Reg)){
-                    SearchInput.value += '.com';
+            var oSearchInput = document.querySelector('#taodm');
+            var rReg = /(.com|.net|.cn|.com.cn)$/;
+            oSearchInput.addEventListener('blur', function(){
+                if(oSearchInput.value !== '域名信息综合查询' && !oSearchInput.value.match(rReg)){
+                    oSearchInput.value += '.com';
                 }
             });
-            SearchInput.addEventListener('keydown', function(e){
+            oSearchInput.addEventListener('keydown', function(e){
                 if(e.keyCode == 13){
-                    if(SearchInput.value !== '域名信息综合查询' && !SearchInput.value.match(Reg)){
-                        SearchInput.value += '.com';
+                    if(oSearchInput.value !== '域名信息综合查询' && !oSearchInput.value.match(rReg)){
+                        oSearchInput.value += '.com';
                     }
                 }
             });
@@ -122,8 +122,8 @@
         // 启用"一键检测注册状态"按钮
         this.openChazczt = function (){
             $('#shuchu').on('DOMNodeInserted', function (){
-                var BtnChazczt = document.querySelector('#a_plchazc');
-                BtnChazczt.setAttribute('onclick','return pl_chazczt2();');
+                var oBtnChazczt = document.querySelector('#a_plchazc');
+                oBtnChazczt.setAttribute('onclick','return pl_chazczt2();');
             });
         };
         // 域名列表增加“域名辅助信息查询”按钮，可一键查询该域名企业信息、估价信息
@@ -135,32 +135,30 @@
                 }
             });
             function changeShuchuHtml(){
-                var DoMainList = $('#shuchu .balist');
-                DoMainList.find('tr').each(function(i,e){
-                    var AtotalCount = DoMainList.find('tr').size()-1;
+                var asDoMainList = $('#shuchu .balist');
+                asDoMainList.find('tr').each(function(i,e){
+                    var AtotalCount = asDoMainList.find('tr').size()-1;
                     if(i>0 && i<AtotalCount){
-                        var DoMainAObj = $(e).find('td:first-child a');
-                        var DoMain = DoMainAObj.text();
-                        var DoMainName = DoMain.split('.');
-                        DoMainAObj.after(getDomainSearchInfoBtns(DoMain, DoMainName[0]));
+                        var osDoMainA = $(e).find('td:first-child a');
+                        var sDoMain = osDoMainA.text();
+                        osDoMainA.after(getDomainSearchInfoBtns(sDoMain));
                     }
                 });
             }
         };
         // 域名出售详情页增加“天眼查”和“估价”按钮
         this.addDomainSearchInfoForSaleDetail = function (){
-            var PageTitle = $('.pjtitle');
-            var DoMain = PageTitle.text();
-            var DoMainName = DoMain.split('.');
-            PageTitle.after(getDomainSearchInfoBtns(DoMain, DoMainName[0]));
+            var oPageTitle = $('.pjtitle');
+            var sDoMain = oPageTitle.text();
+            var sDoMainName = sDoMain.split('.');
+            oPageTitle.after(getDomainSearchInfoBtns(sDoMain, sDoMainName[0]));
         };
         // 域名竞价情页增加“天眼查”和“估价”按钮
         this.addDomainSearchInfoForJingjiaDetail = function (){
-            var PageTitle = $('.orderinfo h1');
+            var oPageTitle = $('.orderinfo h1');
             var PageJingJiaTools = $('#app_zhcxsc');
-            var DoMain = PageTitle.attr('title');
-            var DoMainName = DoMain.split('.');
-            PageJingJiaTools.prepend(getDomainSearchInfoBtns(DoMain, DoMainName[0]));
+            var sDoMain = oPageTitle.attr('title');
+            PageJingJiaTools.prepend(getDomainSearchInfoBtns(sDoMain));
         };
     }
 
@@ -178,24 +176,22 @@
                 }
             });
             function changeShuchuHtml(){
-                var DoMainList = $('#content .bookingMain');
-                DoMainList.find('tr').each(function(i,e){
-                    var AtotalCount = DoMainList.find('tr').size();
+                var asDoMainList = $('#content .bookingMain');
+                asDoMainList.find('tr').each(function(i,e){
+                    var AtotalCount = asDoMainList.find('tr').size();
                     if(i<AtotalCount){
-                        var DoMainAObj = $(e).find('.domain a');
-                        var DoMain = DoMainAObj.text();
-                        var DoMainName = DoMain.split('.');
-                        DoMainAObj.after(getDomainSearchInfoBtns(DoMain, DoMainName[0]));
+                        var osDoMainA = $(e).find('.domain a');
+                        var sDoMain = osDoMainA.text();
+                        osDoMainA.after(getDomainSearchInfoBtns(sDoMain));
                     }
                 });
             }
         };
         // 域名出售详情页增加“天眼查”和“估价”按钮
         this.addDomainSearchInfoForDetail = function (){
-            var PageTitle = $('.domain_head .title');
-            var DoMain = PageTitle.text();
-            var DoMainName = DoMain.split('.');
-            PageTitle.append(getDomainSearchInfoBtns(DoMain, DoMainName[0]));
+            var oPageTitle = $('.domain_head .title');
+            var sDoMain = oPageTitle.text();
+            oPageTitle.append(getDomainSearchInfoBtns(sDoMain));
         };
     }
 
@@ -213,24 +209,22 @@
                 }
             });
             function changeShuchuHtml(){
-                var DoMainList = $('#list_id');
-                DoMainList.find('li').each(function(i,e){
-                    var AtotalCount = DoMainList.find('li').size();
+                var asDoMainList = $('#list_id');
+                asDoMainList.find('li').each(function(i,e){
+                    var AtotalCount = asDoMainList.find('li').size();
                     if(i<AtotalCount){
-                        var DoMainAObj = $(e).find('a.hui6-hover');
-                        var DoMain = DoMainAObj.text();
-                        var DoMainName = DoMain.split('.');
-                        DoMainAObj.after(getDomainSearchInfoBtns(DoMain, DoMainName[0]));
+                        var osDoMainA = $(e).find('a.hui6-hover');
+                        var sDoMain = osDoMainA.text();
+                        osDoMainA.after(getDomainSearchInfoBtns(sDoMain));
                     }
                 });
             }
         };
         // 域名出售详情页增加“天眼查”和“估价”按钮
         this.addDomainSearchInfoForDetail = function (){
-            var PageTitle = $('.detail-tit .dt-yuming');
-            var DoMain = PageTitle.text();
-            var DoMainName = DoMain.split('.');
-            PageTitle.append(getDomainSearchInfoBtns(DoMain, DoMainName[0]));
+            var oPageTitle = $('.detail-tit .dt-yuming');
+            var sDoMain = oPageTitle.text();
+            oPageTitle.append(getDomainSearchInfoBtns(sDoMain));
         };
     }
 })();
