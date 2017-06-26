@@ -57,7 +57,7 @@
     // 获取“域名辅助信息查询”按钮
     function getDomainSearchInfoBtns(domain){
         var _sDomain = domain.trim();
-        var _sDomainName = _sDomain.split(',')[0]
+        var _sDomainName = _sDomain.split('.')[0]
         var AddDomainSearchBtnsWrap = $('<span id="domainSearchBtns"></span');
         var AddDomainSearchBtnsHtml = '【<a class="taomiTools-a tianyancha" target="_blank" title="来！天眼查一下" href="http://www.tianyancha.com/search?key='+ _sDomainName +'">眼</a>|<a class="taomiTools-a gujia" target="_blank" title="来！估个价" href="http://www.cxz.com/s.php?site='+ _sDomain +'">估</a>|<a class="taomiTools-a wanwang" target="_blank" title="查，已注册后缀域名" href="https://wanwang.aliyun.com/domain/searchresult/?keyword='+ _sDomainName +'&suffix=.com">注</a>】';
         AddDomainSearchBtnsWrap.html(AddDomainSearchBtnsHtml);
@@ -78,13 +78,13 @@
                 }
             });
             function changeShuchuHtml(){
-                var asDoMainList = $('.J_result_data');
-                asDoMainList.find('tr').each(function(i,e){
-                    var AtotalCount = asDoMainList.find('tr').size();
+                var aDoMainList = $('.J_result_data');
+                aDoMainList.find('tr').each(function(i,e){
+                    var AtotalCount = aDoMainList.find('tr').size();
                     if(i>0 && i<AtotalCount){
-                        var osDoMainA = $(e).find('.first');
-                        var sDoMain = osDoMainA.text();
-                        osDoMainA.append(getDomainSearchInfoBtns(sDoMain));
+                        var oDoMainA = $(e).find('.first');
+                        var sDoMain = oDoMainA.text();
+                        oDoMainA.append(getDomainSearchInfoBtns(sDoMain));
                     }
                 });
             }
@@ -135,13 +135,13 @@
                 }
             });
             function changeShuchuHtml(){
-                var asDoMainList = $('#shuchu .balist');
-                asDoMainList.find('tr').each(function(i,e){
-                    var AtotalCount = asDoMainList.find('tr').size()-1;
+                var aDoMainList = $('#shuchu .balist');
+                aDoMainList.find('tr').each(function(i,e){
+                    var AtotalCount = aDoMainList.find('tr').size()-1;
                     if(i>0 && i<AtotalCount){
-                        var osDoMainA = $(e).find('td:first-child a');
-                        var sDoMain = osDoMainA.text();
-                        osDoMainA.after(getDomainSearchInfoBtns(sDoMain));
+                        var oDoMainA = $(e).find('td:first-child a');
+                        var sDoMain = oDoMainA.text();
+                        oDoMainA.after(getDomainSearchInfoBtns(sDoMain));
                     }
                 });
             }
@@ -156,9 +156,9 @@
         // 域名竞价情页增加“天眼查”和“估价”按钮
         this.addDomainSearchInfoForJingjiaDetail = function (){
             var oPageTitle = $('.orderinfo h1');
-            var PageJingJiaTools = $('#app_zhcxsc');
+            var oPageJingJiaTools = $('#app_zhcxsc');
             var sDoMain = oPageTitle.attr('title');
-            PageJingJiaTools.prepend(getDomainSearchInfoBtns(sDoMain));
+            oPageJingJiaTools.prepend(getDomainSearchInfoBtns(sDoMain));
         };
     }
 
@@ -176,13 +176,13 @@
                 }
             });
             function changeShuchuHtml(){
-                var asDoMainList = $('#content .bookingMain');
-                asDoMainList.find('tr').each(function(i,e){
-                    var AtotalCount = asDoMainList.find('tr').size();
+                var aDoMainList = $('#content .bookingMain');
+                aDoMainList.find('tr').each(function(i,e){
+                    var AtotalCount = aDoMainList.find('tr').size();
                     if(i<AtotalCount){
-                        var osDoMainA = $(e).find('.domain a');
-                        var sDoMain = osDoMainA.text();
-                        osDoMainA.after(getDomainSearchInfoBtns(sDoMain));
+                        var oDoMainA = $(e).find('.domain a');
+                        var sDoMain = oDoMainA.text();
+                        oDoMainA.after(getDomainSearchInfoBtns(sDoMain));
                     }
                 });
             }
@@ -209,13 +209,13 @@
                 }
             });
             function changeShuchuHtml(){
-                var asDoMainList = $('#list_id');
-                asDoMainList.find('li').each(function(i,e){
-                    var AtotalCount = asDoMainList.find('li').size();
+                var aDoMainList = $('#list_id');
+                aDoMainList.find('li').each(function(i,e){
+                    var AtotalCount = aDoMainList.find('li').size();
                     if(i<AtotalCount){
-                        var osDoMainA = $(e).find('a.hui6-hover');
-                        var sDoMain = osDoMainA.text();
-                        osDoMainA.after(getDomainSearchInfoBtns(sDoMain));
+                        var oDoMainA = $(e).find('a.hui6-hover');
+                        var sDoMain = oDoMainA.text();
+                        oDoMainA.after(getDomainSearchInfoBtns(sDoMain));
                     }
                 });
             }
