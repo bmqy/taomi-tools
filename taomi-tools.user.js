@@ -57,7 +57,7 @@
     // 获取“域名辅助信息查询”按钮
     function getDomainSearchInfoBtns(domain){
         var _sDomain = domain.trim();
-        var _sDomainName = _sDomain.split('.')[0]
+        var _sDomainName = _sDomain.split('.')[0];
         var AddDomainSearchBtnsWrap = $('<span id="domainSearchBtns"></span');
         var AddDomainSearchBtnsHtml = '【<a class="taomiTools-a tianyancha" target="_blank" title="来！天眼查一下" href="http://www.tianyancha.com/search?key='+ _sDomainName +'">眼</a>|<a class="taomiTools-a gujia" target="_blank" title="来！估个价" href="http://www.cxz.com/s.php?site='+ _sDomain +'">估</a>|<a class="taomiTools-a wanwang" target="_blank" title="查，已注册后缀域名" href="https://wanwang.aliyun.com/domain/searchresult/?keyword='+ _sDomainName +'&suffix=.com">注</a>】';
         AddDomainSearchBtnsWrap.html(AddDomainSearchBtnsHtml);
