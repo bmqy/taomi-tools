@@ -1,7 +1,7 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name         淘米辅助工具
 // @namespace    http://bmqy.net/
-// @version      0.3.7
+// @version      0.3.8
 // @description  为方便域名爱好者打造的辅助型工具。支持万网、聚名网、易名中国、爱名网（可能会不定期更新）。
 // @author       bmqy
 // @match        *://*.aliyun.com/*
@@ -112,7 +112,7 @@
         // 为搜索框自动补全".com"后缀
         this.addSearchSuffix = function (){
             var oSearchInput = document.querySelector('#taodm');
-            var rReg = /(.com|.net|.cn|.com.cn)$/;
+            var rReg = /(.com|.net|.cn|.com.cn|.net.cn|.cc|.me|.wang|.tv|.top|.vip)$/;
             oSearchInput.addEventListener('blur', function(){
                 if(oSearchInput.value !== '域名信息综合查询' && !oSearchInput.value.match(rReg)){
                     oSearchInput.value += '.com';
