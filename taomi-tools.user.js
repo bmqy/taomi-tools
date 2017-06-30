@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         淘米辅助工具
 // @namespace    http://bmqy.net/
-// @version      0.4.0
+// @version      0.4.1
 // @description  为方便域名爱好者打造的辅助型工具。支持万网、聚名网、易名中国、爱名网（可能会不定期更新）。
 // @author       bmqy
 // @match        *://*.aliyun.com/*
@@ -79,30 +79,55 @@
     }
 
     // 域名列表增加“域名辅助信息查询”按钮，可一键查询该域名企业信息、估价信息、综合信息等按钮
-    function doAddDomainSearchInfoBtns(objName, cellName, domainWarpName, isBegin1){
+    function doAddDomainSearchInfoBtns(objName, cellName, domainWarpName, other){
+        var otherDefault = {
+            isBegin1 : false,
+            warpStyle : "append"
+        };
+        if(other){
+            for( var x in other){
+                otherDefault[x] = other[x];
+            }
+        }
         if($(objName).size() > 0){
-            changeShuchuHtml(isBegin1);
+            changeShuchuHtml(otherDefault);
             $(document).on('DOMNodeInserted', objName, function(){
                 if($('#domainSearchBtns').size()===0){
-                    changeShuchuHtml(isBegin1);
+                    changeShuchuHtml(otherDefault);
                 }
             });
         }
-        function changeShuchuHtml(isBegin1){
+        function changeShuchuHtml(otherDefault){
             var aDoMainList = $(objName);
             aDoMainList.find(cellName).each(function(i,e){
                 var AtotalCount = aDoMainList.find(cellName).size();
                 var oDoMainA = $(e).find(domainWarpName);
                 var sDoMain = oDoMainA.text();
 
-                if(isBegin1){
+                if(otherDefault.isBegin1){
                     if(i<AtotalCount){
-                        oDoMainA.append(getDomainSearchInfoBtns(sDoMain));
+                        switch(otherDefault.warpStyle){
+                            case 'append':
+                                oDoMainA.append(getDomainSearchInfoBtns(sDoMain));
+                                break;
+                            case 'after':
+                                oDoMainA.after(getDomainSearchInfoBtns(sDoMain));
+                                break;
+                            default:break;
+                        }
                     }
                 }
                 else{
                     if(i>0 && i<AtotalCount){
-                        oDoMainA.append(getDomainSearchInfoBtns(sDoMain));
+                        switch(otherDefault.warpStyle){
+                            case 'append':
+                                oDoMainA.append(getDomainSearchInfoBtns(sDoMain));
+                                break;
+                            case 'after':
+                                oDoMainA.after(getDomainSearchInfoBtns(sDoMain));
+                                break;
+                            default:break;
+                        }
                     }
                 }
             });
@@ -252,7 +277,7 @@
         };
         // 域名列表增加“域名辅助信息查询”按钮
         this.addDomainSearchInfo = function (){
-            doAddDomainSearchInfoBtns('#shuchu', 'tr', 'td:first-child a');
+            doAddDomainSearchInfoBtns('#shuchu', 'tr', 'td:first-child a', {warpStyle: 'after'});
         };
         // 域名出售详情页增加“域名辅助信息查询”按钮
         this.addDomainSearchInfoForSaleDetail = function (){
@@ -308,7 +333,7 @@
     function AiMing(){
         // 域名列表增加“域名辅助信息查询”按钮
         this.addDomainSearchInfo = function (){
-            doAddDomainSearchInfoBtns('#list_id', 'li', 'a.hui6-hover', true);
+            doAddDomainSearchInfoBtns('#list_id', 'li', 'a.hui6-hover', {isBegin1: true});
         };
         // 域名出售详情页增加“域名辅助信息查询”按钮
         this.addDomainSearchInfoForDetail = function (){
