@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         淘米辅助工具
 // @namespace    http://bmqy.net/
-// @version      0.4.1
+// @version      0.4.2
 // @description  为方便域名爱好者打造的辅助型工具。支持万网、聚名网、易名中国、爱名网（可能会不定期更新）。
 // @author       bmqy
 // @match        *://*.aliyun.com/*
@@ -277,7 +277,7 @@
         };
         // 域名列表增加“域名辅助信息查询”按钮
         this.addDomainSearchInfo = function (){
-            doAddDomainSearchInfoBtns('#shuchu', 'tr', 'td:first-child a', {warpStyle: 'after'});
+            doAddDomainSearchInfoBtns('#shuchu', 'tr', 'td:first-child a:not("#a_plchazc")', {warpStyle: 'after'});
         };
         // 域名出售详情页增加“域名辅助信息查询”按钮
         this.addDomainSearchInfoForSaleDetail = function (){
