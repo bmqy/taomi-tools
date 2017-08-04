@@ -15,5 +15,5 @@
 4. 可以使用“一键检测注册状态”按钮（仅支持聚名网）；  
 5. 支持被隐藏的拼音类域名（支持的域名文字显示为<font color="green">绿色</font>，仅支持聚名网）； 
 
-如需反馈问题，请加Q群663099879，或扫描下面二维码快速加群
-![哇哈哈QQ群](https://raw.githubusercontent.com/bmqy/taomi-tools/master/images/temp_qrcode_share_663099879.png)
+如需反馈问题，请加Q群663099879，或扫描下面二维码快速加群  
+<img src="https://raw.githubusercontent.com/bmqy/taomi-tools/master/images/temp_qrcode_share_663099879.png" width="300" />
