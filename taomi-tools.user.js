@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         淘米辅助工具
 // @namespace    http://bmqy.net/
-// @version      0.4.4
+// @version      0.4.5
 // @description  为方便域名爱好者打造的辅助型工具。支持万网、聚名网、易名中国、爱名网（可能会不定期更新）。
 // @author       bmqy
 // @match        *://*.aliyun.com/*
@@ -14,6 +14,7 @@
 // ==/UserScript==
 
 (function() {
+    'use strict';
     /*
     js实现汉字转拼音
     引用: http://www.cnblogs.com/kinnjee/p/4160060.html
@@ -434,13 +435,13 @@
                     I1 += val;
                 } else if (name !== false) {
                     I1 += name;
-                }
+                };
 
-            }
+            };
             I1 = I1.replace(/ /g, '-');
             while (I1.indexOf('--') > 0) {
                 I1 = I1.replace('--', '-');
-            }
+            };
             return I1;
         },
         // 在对象中搜索
@@ -448,39 +449,37 @@
             for (var name in this.PinYin) {
                 if (this.PinYin[name].indexOf(l1) != -1) {
                     return this.CapitalText(name, 0);
-                    break;
-                }
-            }
+                };
+            };
             return false;
         },
         // 大写字母
         CapitalText: function(l1, types){
             if(!types){
                 types = 0;
-            }
+            };
             switch(types){
                 case 1: // 首字母大写
                     if (l1.length > 0) {
                         var first = l1.substr(0, 1).toUpperCase();
                         var spare = l1.substr(1, l1.length);
                         return first + spare;
-                    }
+                    };
                     break;
                 case 2: // 全部大写
                     if (l1.length > 0) {
                         return l1.toUpperCase();
-                    }
+                    };
                     break;
                 default: // 全部小写
                     if (l1.length > 0) {
                         return l1.toLowerCase();
-                    }
+                    };
                     break;
-            }
+            };
         }
-    }
-
-    'use strict';
+    };
+    
     GM_addStyle(
         '.taomiTools-a{font-family:Microsoft YaHei;font-size:12px;color:blue;font-weight:normal;}'+
         '.taomiTools-a.tianyancha{color:#009bae !important;}'+
@@ -572,11 +571,17 @@
                 var sDoMainSuffix = sDoMain.split('.')[1];
 
                 var reg = /\*+/g;
+                var regTitleKey = /(含义：|备案信息：)/g;
                 var oDomainCNnameWarp = $(e).find('td').eq(2);
                 var oDomainCNname = '';
                 if(reg.test(sDoMain)){
                     if(oDomainCNnameWarp.attr('title')){
-                        oDomainCNname = oDomainCNnameWarp.attr('title').replace('含义：', '').split(',')[0];
+                        if(oDomainCNnameWarp.attr('title').match(regTitleKey)[0] === '含义：'){
+                            oDomainCNname = oDomainCNnameWarp.attr('title').replace('含义：', '').split(',')[0];
+                        }
+                        if(oDomainCNnameWarp.attr('title').match(regTitleKey)[0] === '备案信息：'){
+                            oDomainCNname = oDomainCNnameWarp.find('font[title]').text();
+                        }
                         sDoMain = doZhongwen2Pinyin.ConvertPinyin(oDomainCNname) +'.'+ sDoMainSuffix;
                         oDoMainA.attr('title', sDoMain).css({'color': 'green'});
                     }
