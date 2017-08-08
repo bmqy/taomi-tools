@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         淘米辅助工具
 // @namespace    http://bmqy.net/
-// @version      0.4.5
+// @version      0.4.6
 // @description  为方便域名爱好者打造的辅助型工具。支持万网、聚名网、易名中国、爱名网（可能会不定期更新）。
 // @author       bmqy
 // @match        *://*.aliyun.com/*
@@ -479,7 +479,7 @@
             };
         }
     };
-    
+
     GM_addStyle(
         '.taomiTools-a{font-family:Microsoft YaHei;font-size:12px;color:blue;font-weight:normal;}'+
         '.taomiTools-a.tianyancha{color:#009bae !important;}'+
@@ -580,7 +580,7 @@
                             oDomainCNname = oDomainCNnameWarp.attr('title').replace('含义：', '').split(',')[0];
                         }
                         if(oDomainCNnameWarp.attr('title').match(regTitleKey)[0] === '备案信息：'){
-                            oDomainCNname = oDomainCNnameWarp.find('font[title]').text();
+                            oDomainCNname = oDomainCNnameWarp.find('font[title]').text().split(',')[0];
                         }
                         sDoMain = doZhongwen2Pinyin.ConvertPinyin(oDomainCNname) +'.'+ sDoMainSuffix;
                         oDoMainA.attr('title', sDoMain).css({'color': 'green'});
