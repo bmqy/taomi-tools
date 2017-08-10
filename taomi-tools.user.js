@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         淘米辅助工具
 // @namespace    http://bmqy.net/
-// @version      0.4.6
+// @version      0.5.0
 // @description  为方便域名爱好者打造的辅助型工具。支持万网、聚名网、易名中国、爱名网（可能会不定期更新）。
 // @author       bmqy
 // @match        *://*.aliyun.com/*
@@ -435,13 +435,13 @@
                     I1 += val;
                 } else if (name !== false) {
                     I1 += name;
-                };
+                }
 
-            };
+            }
             I1 = I1.replace(/ /g, '-');
             while (I1.indexOf('--') > 0) {
                 I1 = I1.replace('--', '-');
-            };
+            }
             return I1;
         },
         // 在对象中搜索
@@ -449,34 +449,34 @@
             for (var name in this.PinYin) {
                 if (this.PinYin[name].indexOf(l1) != -1) {
                     return this.CapitalText(name, 0);
-                };
-            };
+                }
+            }
             return false;
         },
         // 大写字母
         CapitalText: function(l1, types){
             if(!types){
                 types = 0;
-            };
+            }
             switch(types){
                 case 1: // 首字母大写
                     if (l1.length > 0) {
                         var first = l1.substr(0, 1).toUpperCase();
                         var spare = l1.substr(1, l1.length);
                         return first + spare;
-                    };
+                    }
                     break;
                 case 2: // 全部大写
                     if (l1.length > 0) {
                         return l1.toUpperCase();
-                    };
+                    }
                     break;
                 default: // 全部小写
                     if (l1.length > 0) {
                         return l1.toLowerCase();
-                    };
+                    }
                     break;
-            };
+            }
         }
     };
 
@@ -510,6 +510,7 @@
             juming.addDomainSearchInfoForSaleDetail();
             juming.addDomainSearchInfoForJingjiaDetail();
             juming.customDomainMultiSelect();
+            juming.saveSearchConfig();
         }
         // 兼容易名中国
         if( sWindowUrl.indexOf('ename.com') !=-1){
@@ -783,6 +784,170 @@
         // 域名出售列表自定义批量多选
         this.customDomainMultiSelect = function (){
             doCustomDomainMultiSelect('#shuchu .balist', 'input[name=xzid],input[name=ym]');
+        };
+        // 保存自定义查询设置
+        this.saveSearchConfig = function (){
+            if(location.pathname === '/6/' || location.pathname === '/newcha/'){
+                var oSearchForm = $('#newcha');
+                var oSearchFormActionOld = oSearchForm.attr('action');
+                var oJumingSearchConfigBar = $('#class .sclist:first > ul');
+                var oCustomSearchConfigBarUtil = '<li><a id="doSaveSearchConfigs" href="javascript:;" title="保存以下查询设置--by淘米辅助工具">【保存以下设置】</a></li>';
+                oJumingSearchConfigBar.append(oCustomSearchConfigBarUtil);
+
+                $("#doSaveSearchConfigs").on('click', function(){
+                    var _data = {};
+                    var oSaveTime = new Date();
+                    var sSaveTime = oSaveTime.getFullYear() +'-'+ (oSaveTime.getMonth()+1) +'-'+ oSaveTime.getDate() +' '+ oSaveTime.getHours() +':'+ oSaveTime.getMinutes() +':'+ oSaveTime.getSeconds();
+                    _data.saveTime = sSaveTime;
+
+                    _data.gjz_cha = oSearchForm.find("[name=gjz_cha]").val();
+                    _data.gjz_wz1 = oSearchForm.find("[name=gjz_wz1]").is(':checked') ? 0 : 1;
+                    _data.gjz_wz2 = oSearchForm.find("[name=gjz_wz2]").is(':checked') ? 0 : 1;
+
+                    _data.gjz_cha2 = oSearchForm.find("[name=gjz_cha2]").val();
+                    _data.gjz_pc1 = oSearchForm.find("[name=gjz_pc1]").is(':checked') ? 0 : 1;
+                    _data.gjz_pc2 = oSearchForm.find("[name=gjz_pc2]").is(':checked') ? 0 : 1;
+
+                    _data.gjz_cha2b = oSearchForm.find("[name=gjz_cha2b]").val();
+                    _data.gjz_pc1b = oSearchForm.find("[name=gjz_pc1b]").is(':checked') ? 0 : 1;
+                    _data.gjz_pc2b = oSearchForm.find("[name=gjz_pc2b]").is(':checked') ? 0 : 1;
+
+                    _data.ymgc = oSearchForm.find("[name=ymgc]").val();
+                    _data.ymgcte = oSearchForm.find("[name=ymgcte]").val();
+
+                    _data.ymcd_1 = oSearchForm.find("[name=ymcd_1]").val();
+                    _data.ymcd_2 = oSearchForm.find("[name=ymcd_2]").val();
+
+                    _data.ymhzfs = oSearchForm.find("[name=ymhzfs]:checked").val();
+                    _data.ymhz = oSearchForm.find("[name=ymhz]").val();
+
+                    _data.sfba_1 = oSearchForm.find("[name=sfba_1]").is(':checked') ? 0 : 1;
+                    _data.baxz = oSearchForm.find("[name=baxz]").val();
+                    _data.bajrs = oSearchForm.find("[name=bajrs]").is(':checked') ? 0 : 1;
+
+                    _data.tsym = oSearchForm.find("[name=tsym]:checked").val();
+
+                    _data.scsj = oSearchForm.find("[name=scsj]").val();
+                    _data.sclx = oSearchForm.find("[name=sclx]").val();
+                    _data.zcsj = oSearchForm.find("[name=zcsj]").val();
+                    _data.mysc = oSearchForm.find("[name=mysc]").val();
+                    _data.jgpx = oSearchForm.find("[name=jgpx]").val();
+
+                    _data.noyyd = oSearchForm.find("[name=noyyd]").is(':checked') ? 0 : 1;
+
+                    _data.pr_1 = oSearchForm.find("[name=pr_1]").val();
+                    _data.pr_2 = oSearchForm.find("[name=pr_2]").val();
+                    _data.bdsl_1 = oSearchForm.find("[name=bdsl_1]").val();
+                    _data.bdsl_2 = oSearchForm.find("[name=bdsl_2]").val();
+                    _data.bdfl_1 = oSearchForm.find("[name=bdfl_1]").val();
+                    _data.bdfl_2 = oSearchForm.find("[name=bdfl_2]").val();
+
+                    if(localStorage.getItem('juming_search_config')){
+                        if(confirm('确定要覆盖已保存的查询设置吗？')){
+                            localStorage.removeItem('juming_search_config');
+                            localStorage.setItem('juming_search_config', JSON.stringify(_data));
+                            alert('以覆盖原设置');
+                        }
+                    }
+                    else{
+                        localStorage.setItem('juming_search_config', JSON.stringify(_data));
+                        alert('以保存设置');
+                    }
+                });
+
+                if(localStorage.getItem('juming_search_config')){
+                    var oZairushezhi = $('#zairushezhi');
+                    var searchConfig = JSON.parse(localStorage.getItem('juming_search_config'));
+                    oZairushezhi.append('<option value="tmfz_juming_search">tmfz查询设置 | '+ searchConfig.saveTime +'</option>');
+
+                    oZairushezhi.on('input', function(){
+                        if($(this).val() === 'tmfz_juming_search'){
+                            for(var item in searchConfig){
+                                if(item == 'saveTime'){
+                                    continue;
+                                }
+                                else if(item == 'gjz_wz1'){
+                                    oSearchForm.find('[name='+ item +']').prop('checked', searchConfig[item] == 1 ? false : true).val(searchConfig[item]);
+                                }
+                                else if(item == 'gjz_wz2'){
+                                    oSearchForm.find('[name='+ item +']').prop('checked', searchConfig[item] == 1 ? false : true).val(searchConfig[item]);
+                                }
+                                else if(item == 'gjz_pc1'){
+                                    oSearchForm.find('[name='+ item +']').prop('checked', searchConfig[item] == 1 ? false : true).val(searchConfig[item]);
+                                }
+                                else if(item == 'gjz_pc2'){
+                                    oSearchForm.find('[name='+ item +']').prop('checked', searchConfig[item] == 1 ? false : true).val(searchConfig[item]);
+                                }
+                                else if(item == 'gjz_cha2b'){
+                                    oSearchForm.find('[name='+ item +']').val(searchConfig[item]);
+                                    if(searchConfig[item] != '可用,分隔'){
+                                        $('#pcjia').text('-');
+                                        $('#pcjia_sc').show();
+                                    }
+                                }
+                                else if(item == 'gjz_pc1b'){
+                                    oSearchForm.find('[name='+ item +']').prop('checked', searchConfig[item] == 1 ? false : true).val(searchConfig[item]);
+                                }
+                                else if(item == 'gjz_pc2b'){
+                                    oSearchForm.find('[name='+ item +']').prop('checked', searchConfig[item] == 1 ? false : true).val(searchConfig[item]);
+                                }
+                                else if(item == 'ymgcte'){
+                                    if(searchConfig[item] != 0){
+                                        $('#gcjia').text('-');
+                                        $('#gcjia_sc').show();
+                                    }
+                                    else{
+                                        $('#gcjia').text('+');
+                                        $('#gcjia_sc').hide();
+                                    }
+                                }
+                                else if(item == 'ymhzfs'){
+                                    oSearchForm.find('[name='+ item +'][value='+ searchConfig[item] +']').prop('checked', searchConfig[item] == 1 ? false : true).val(searchConfig[item]);
+                                    if(searchConfig[item] == 0){
+                                        $('#ymhz_zdy').show();
+                                    }
+                                    else{
+                                        $('#ymhz_zdy').hide();
+                                    }
+                                }
+                                else if(item == 'tsym'){
+                                    oSearchForm.find('[name='+ item +'][value='+ searchConfig[item] +']').prop('checked', searchConfig[item] == 1 ? false : true).val(searchConfig[item]);
+                                    /*if(searchConfig[item] == 0){
+                                        $('#ymhz_zdy').show();
+                                    }
+                                    else{
+                                        $('#ymhz_zdy').hide();
+                                    }*/
+                                }
+                                else if(item == 'sfba_1'){
+                                    oSearchForm.find('[name='+ item +']').prop('checked', searchConfig[item] == 1 ? false : true).val(searchConfig[item]);
+                                    if(searchConfig[item] == 0){
+                                        $('#beiancha').show();
+                                    }
+                                }
+                                else if(item == 'bajrs'){
+                                    oSearchForm.find('[name='+ item +']').prop('checked', searchConfig[item] == 1 ? false : true).val(searchConfig[item]);
+                                }
+
+                                else if(item == 'pr_1' || item == 'pr_2' || item == 'bdsl_1' || item == 'bdsl_2' || item == 'bdfl_1' || item == 'bdfl_2'){
+                                    oSearchForm.find('[name='+ item +']').val(searchConfig[item]);
+                                    console.log(item +': ');
+                                    if(searchConfig[item] > 0){
+                                        console.log(11111);
+                                        $('#gengduoset').show();
+                                    }
+                                }
+                                else if(item == 'noyyd'){
+                                    oSearchForm.find('[name='+ item +']').prop('checked', searchConfig[item] == 1 ? false : true).val(searchConfig[item]);
+                                }
+                                else{
+                                    oSearchForm.find('[name='+ item +']').val(searchConfig[item]);
+                                }
+                            }
+                        }
+                    });
+                }
+            }
         };
     }
 
