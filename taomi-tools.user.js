@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         淘米辅助工具
 // @namespace    http://bmqy.net/
-// @version      0.5.0
+// @version      0.5.1
 // @description  为方便域名爱好者打造的辅助型工具。支持万网、聚名网、易名中国、爱名网（可能会不定期更新）。
 // @author       bmqy
 // @match        *://*.aliyun.com/*
@@ -11,6 +11,10 @@
 // @require      https://cdn.bootcss.com/jquery/2.2.1/jquery.js
 // @run-at       document-end
 // @grant        GM_addStyle
+// @grant        GM_getValue
+// @grant        GM_setValue
+// @grant        GM_addStyle
+// @grant        GM_deleteValue
 // ==/UserScript==
 
 (function() {
@@ -842,22 +846,22 @@
                     _data.bdfl_1 = oSearchForm.find("[name=bdfl_1]").val();
                     _data.bdfl_2 = oSearchForm.find("[name=bdfl_2]").val();
 
-                    if(localStorage.getItem('juming_search_config')){
+                    if(GM_getValue('juming_search_config')){
                         if(confirm('确定要覆盖已保存的查询设置吗？')){
-                            localStorage.removeItem('juming_search_config');
-                            localStorage.setItem('juming_search_config', JSON.stringify(_data));
+                            GM_deleteValue('juming_search_config');
+                            GM_setValue('juming_search_config', JSON.stringify(_data));
                             alert('以覆盖原设置');
                         }
                     }
                     else{
-                        localStorage.setItem('juming_search_config', JSON.stringify(_data));
+                        GM_setValue('juming_search_config', JSON.stringify(_data));
                         alert('以保存设置');
                     }
                 });
 
-                if(localStorage.getItem('juming_search_config')){
+                if(GM_getValue('juming_search_config')){
                     var oZairushezhi = $('#zairushezhi');
-                    var searchConfig = JSON.parse(localStorage.getItem('juming_search_config'));
+                    var searchConfig = JSON.parse(GM_getValue('juming_search_config'));
                     oZairushezhi.append('<option value="tmfz_juming_search">tmfz查询设置 | '+ searchConfig.saveTime +'</option>');
 
                     oZairushezhi.on('input', function(){
