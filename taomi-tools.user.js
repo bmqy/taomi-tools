@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         淘米辅助工具
 // @namespace    http://bmqy.net/
-// @version      0.5.1
+// @version      0.5.2
 // @description  为方便域名爱好者打造的辅助型工具。支持万网、聚名网、易名中国、爱名网（可能会不定期更新）。
 // @author       bmqy
 // @match        *://*.aliyun.com/*
@@ -720,7 +720,7 @@
         this.addDomainSearchInfoForDetail = function (){
             if($('.tao-title .tdo-name').size() > 0){
                 var oPageTitle = $('.tao-title .tdo-name');
-                var sDoMain = oPageTitle.text();
+                var sDoMain = oPageTitle.text().trim();
                 oPageTitle.append(getDomainSearchInfoBtns(sDoMain));
             }
         };
@@ -771,7 +771,7 @@
         this.addDomainSearchInfoForSaleDetail = function (){
             if($('.pjtitle').size() > 0){
                 var oPageTitle = $('.pjtitle');
-                var sDoMain = oPageTitle.text();
+                var sDoMain = oPageTitle.text().trim();
                 var sDoMainName = sDoMain.split('.');
                 oPageTitle.after(getDomainSearchInfoBtns(sDoMain, sDoMainName[0]));
             }
@@ -968,7 +968,7 @@
         this.addDomainSearchInfoForDetail = function (){
             if($('.domain_head .title').size() > 0){
                 var oPageTitle = $('.domain_head .title');
-                var sDoMain = oPageTitle.text();
+                var sDoMain = oPageTitle.text().trim();
                 oPageTitle.append(getDomainSearchInfoBtns(sDoMain));
             }
         };
@@ -991,7 +991,7 @@
         this.addDomainSearchInfoForDetail = function (){
             if($('.detail-tit .dt-yuming').size() > 0){
                 var oPageTitle = $('.detail-tit .dt-yuming');
-                var sDoMain = oPageTitle.text();
+                var sDoMain = oPageTitle.text().trim();
                 oPageTitle.append(getDomainSearchInfoBtns(sDoMain));
             }
         };
