@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         淘米辅助工具
 // @namespace    http://bmqy.net/
-// @version      0.5.3
+// @version      0.5.4
 // @description  为方便域名爱好者打造的辅助型工具。支持万网、聚名网、易名中国、爱名网（可能会不定期更新）。
 // @author       bmqy
 // @match        *://*.aliyun.com/*
@@ -542,7 +542,6 @@
         AddDomainSearchBtnsHtml += '<a class="taomiTools-a tianyancha" target="_blank" title="来！天眼查一下" href="http://www.tianyancha.com/search?key='+ _sDomainName +'">眼</a>';
         AddDomainSearchBtnsHtml += '|<a class="taomiTools-a gujia" target="_blank" title="来！估个价" href="http://www.cxz.com/s.php?site='+ _sDomain +'">估</a>';
         AddDomainSearchBtnsHtml += '|<a class="taomiTools-a wanwang" target="_blank" title="查，已注册后缀域名" href="https://wanwang.aliyun.com/domain/searchresult/?keyword='+ _sDomainName +'&suffix=.com">注</a>';
-        AddDomainSearchBtnsHtml += '|<a class="taomiTools-a wanwang" target="_blank" title="查，已注册后缀域名" href="https://www.benmi.com/whois/'+ _sDomain +'">笨</a>';
         AddDomainSearchBtnsHtml += '|<a class="taomiTools-a zhanzhang" target="_blank" title="来！站长工具走起" href="http://www.aizhan.com/cha/'+ _sDomain +'">站</a>';
         AddDomainSearchBtnsHtml += '|<a class="taomiTools-a zhanzhang" target="_blank" title="来！查查whois历史" href="http://www.cxw.com/whois/history?domain='+ _sDomain +'">历</a>';
         AddDomainSearchBtnsHtml += '】';
