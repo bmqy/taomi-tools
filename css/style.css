@@ -1,0 +1,40 @@
+.taomiTools-a {
+    font-family: Microsoft YaHei;
+    font-size: 12px;
+    color: blue;
+    font-weight: normal;
+}
+
+#domainSearchBtns {
+    font-size: 12px;
+    color: #666;
+}
+
+#timeBar {
+    width: 120px;
+    height: 18px;
+    background-color: #f5f5f5;
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+#timeBar > span {
+    height: 100%;
+    line-height: 18px;
+    background-color: red;
+    float: left;
+    display: inline-block;
+}
+
+#timeBar > span > em {
+    color: #fff;
+    font-size: 12px;
+    font-style: normal;
+    text-shadow: 0.3px 0.3px 0 #666;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+}
